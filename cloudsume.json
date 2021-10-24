@@ -1,0 +1,29 @@
+{
+  "data": [
+    "name",
+    "headline",
+    "address",
+    "mobile",
+    "email",
+    "linkedin",
+    "github",
+    "summary",
+    "experience",
+    "education",
+    "skill",
+    "language"
+  ],
+  "options": {
+    "experience": {
+      "descriptionParagraph": "\\vskip 0pt\\smallskip{}",
+      "descriptionListOptions": "noitemsep,topsep=0pt,after=\\smallskip"
+    },
+    "education": {
+      "descriptionParagraph": "\\vskip 0pt\\smallskip{}",
+      "descriptionListOptions": "noitemsep,topsep=0pt,after=\\smallskip"
+    },
+    "skill": {
+      "grouping": 1
+    }
+  }
+}

@@ -1,0 +1,61 @@
+resume(data) ::= <<
+<preamble()>
+<name(data.name)>
+<title(data.headline)>
+<address(data.address)>
+<mobile(data.mobile)>
+<email(data.email)>
+<linkedin(data.linkedin)>
+<github(data.github)>
+<quote(data.summary)>
+
+\begin{document}
+
+\makecvtitle
+
+<if(data.experience)>\section{Experience}<endif>
+<data.experience:experience()>
+
+<if(data.education)>\section{Education}<endif>
+<data.education:education()>
+
+<if(data.skill)>\section{Skills}<endif>
+<skill(data.skill)>
+
+<if(data.language)>\section{Languages}<endif>
+<data.language:language()>
+
+\end{document}
+>>
+
+preamble() ::= <<
+\documentclass[11pt,letterpaper,sans]{moderncv}
+
+\moderncvstyle{banking}
+\moderncvcolor{burgundy}
+
+\usepackage[scale=0.75]{geometry}
+\usepackage{enumitem}
+>>
+
+name(v) ::= "<if(v && v.firstName && v.lastName)>\name{<firstName(v)>}{<v.lastName>}<else>\name{Jane Emily}{Doe}<endif>"
+firstName(v) ::= "<if(v.middleName)><v.firstName> <v.middleName><else><v.firstName><endif>"
+title(v) ::= "<if(v)>\title{<v>}<endif>"
+address(v) ::= "<if(v)>\address{<v.street>}{<v.region>}{<v.country>}<endif>"
+mobile(v) ::= "<if(v)>\phone[mobile]{<v>}<endif>"
+email(v) ::= "<if(v)>\email{<v>}<endif>"
+linkedin(v) ::= "<if(v)>\social[linkedin]{<v>}<endif>"
+github(v) ::= "<if(v)>\social[github]{<v>}<endif>"
+quote(v) ::= "<if(v)>\quote{<v>}<endif>"
+experience(v) ::= "\cventry{<addr(v)>}{<v.title>}{<v.company>}{<date(v.start)> -- <if(v.end)><date(v.end)><else>present<endif>}{}{<v.description>}"
+education(v) ::= "\cventry{<addr(v)>}{<v.degree>}{<v.institute>}{<date(v.start)> -- <if(v.end)><date(v.end)><else>present<endif>}{<grade(v.grade)>}{<v.description>}"
+skill(v) ::= <<
+<if(v.expert)>\cvitem{Expert}{<v.expert;separator=", ">}<endif>
+<if(v.novice)>\cvitem{Basic}{<v.novice;separator=", ">}<endif>
+>>
+language(v) ::= "\cvitemwithcomment{<v.name>}{<v.proficiency>}{<v.comment>}"
+
+addr(v) ::= "<if(v.country)><v.region>, <v.country><else><localAddr(v)><endif>"
+localAddr(v) ::= "<if(v.region && v.street)><v.street>, <v.region><elseif(v.region)><v.region><else><v.street><endif>"
+date(v) ::= "<if(v)><v.month> <v.year><endif>"
+grade(v) ::= "<if(v)>\textit{<v>}<endif>"
